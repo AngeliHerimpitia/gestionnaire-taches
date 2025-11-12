@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestionaire de tache</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Mon Gestionaire de tache </h1>
+            <div class="date-navigation">
+                <button id="prevDay">Jour précédent </button>
+                <h2 id="currentDate">Date d'aujourd'hui</h2>
+                <button id="nextDay">Jour suivant </button>
+            </div>
+        </header>
+
+        <div class="add-task">
+            <input type="text" id="taskInput" placeholder="Ajouter une nouvelle tache ...">
+            <button id="addTaskBtn">Ajouter</button>
+        </div>
+
+        <div class="tasks-container">
+            <h3>Taches du jour </h3>
+            <div id="tasksList" class="tasks-list">
+                
+            </div>
+        </div>
+        <div class="stats">
+            <p>taches totales: <span id="totalTasks">0</span></p>
+            <p>taches complétées: <span id="CompletedTasks">0</span></p>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
