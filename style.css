@@ -1,157 +1,154 @@
+:root {
+    --bg: #f4f6fb;
+    --card: #ffffff;
+    --text: #222;
+    --accent: #667eea;
+    --success: #28a745;
+    --danger: #dc3545;
+}
+
+body.dark {
+    --bg: #121212;
+    --card: #1f1f1f;
+    --text: #f1f1f1;
+    --accent: #8a9bff;
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
+
 body {
-    font-family: 'Segoe UI', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #667eaa 0%, #764ba2 100%);
+    background: var(--bg);
+    font-family: 'Segoe UI', sans-serif;
     min-height: 100vh;
     padding: 20px;
-}   
-.container{
-    max-width: 800px;
-    margin: 0 auto;
-    background: white;
-    border-radius: 15px;
-    padding: 30px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    transition: background 0.3s;
 }
 
-header {
-    text-align: center;
-    margin-bottom: 30px;
+.container {
+    max-width: 850px;
+    margin: auto;
+    background: var(--card);
+    color: var(--text);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+    transition: background 0.3s, color 0.3s;
 }
-h1{
-    color: #333;
-    margin-bottom: 20px;
-    font-size: 2.5em;
+
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
+
+#themeToggle {
+    font-size: 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
 .date-navigation {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    background: rgba(0,0,0,0.05);
     padding: 15px;
-    background: #f8f9fa;
-    border-radius: 10px;
+    border-radius: 12px;
+    margin-top: 20px;
 }
 
-#currentDate {
-    color: #555;
-    font-size: 1.3em;
-}
-
-button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: all 0.3s ease;
-}
-
-#prevDay, #nextDay {
-    background: #6c757d;
-    color: white;
-}
-
-#prevDay:hover, #nextDay:hover {
-    background: #5a6268;
-}
-
-#addTaskBtn{
-    background: #28a745;
-    color: white;
-    padding: 12px 25px;
-}
-
-#addTaskBtn:hover{
-    background: #218838;
-}
-
-.add-task{
+.add-task {
     display: flex;
     gap: 10px;
-    margin-bottom: 30px;
+    margin: 30px 0;
 }
 
 #taskInput {
     flex: 1;
     padding: 15px;
-    border: 2px solid #e9ecef;
-    border-radius: 8px;
-    transition: border-color 0.3s ease;
+    border-radius: 12px;
+    border: 2px solid #ccc;
 }
 
-#taskInput:focus {
-    outline: none;
-    border-color: #667eea;
+button {
+    padding: 10px 18px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
 }
 
-.tasks-container h3 {
-    color: #333;
-    margin-bottom: 15px;
-    font-size: 1.5em;
+#addTaskBtn {
+    background: var(--success);
+    color: white;
 }
-.task-list {
+
+.tasks-list {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
 }
 
-.task-item{
+.task-item {
     display: flex;
     align-items: center;
+    background: rgba(0,0,0,0.05);
     padding: 15px;
-    background: #f8f9fa;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-    border-left: 4px solid #667eea;
-}
-
-.task-item:hover{
-    background: #e9ecef;
-    transform: translateX(5px);
+    border-radius: 12px;
+    border-left: 5px solid var(--accent);
 }
 
 .task-item.completed {
-    opacity: 0.7;
-    border-left-color: #28a745;
+    opacity: 0.6;
 }
-.task-chekbox {
-    margin-right: 15px;
-    transform: scale(1.2);
-    cursor: pointer;
-}
-.task-text{
+
+.task-text {
     flex: 1;
-    font-size: 16px;
+    margin-left: 10px;
 }
+
 .task-item.completed .task-text {
     text-decoration: line-through;
-    color: #6c757d;
 }
-.task-date {
-    color: #6c757d;
-    font-size: 12px;
-    margin-right: 15px;
-}
-.delete-btn {
-    background: #dc3545;
-    color: white;
-    padding: 8px 15px;
+
+.task-actions button {
+    margin-left: 5px;
     font-size: 12px;
 }
 
-.delete-btn:hover {
-    background: #c82333;
+.edit-btn {
+    background: #ffc107;
 }
-.stats{
+
+.delete-btn {
+    background: var(--danger);
+    color: white;
+}
+
+.stats {
+    margin-top: 30px;
     display: flex;
     justify-content: space-around;
-    margin-top: 30px;
+    background: var(--accent);
+    color: white;
     padding: 20px;
-    background: #667eea;
-    border-radius: 10px;
+    border-radius: 15px;
+}
+#timeInput {
+    padding: 15px;
+    border-radius: 12px;
+    border: 2px solid #ccc;
+    width: 130px;
+}
+
+.task-time {
+    font-size: 12px;
+    opacity: 0.7;
+    margin-left: 10px;
+    white-space: nowrap;
 }

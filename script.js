@@ -1,107 +1,168 @@
 class TaskManager {
     constructor() {
         this.currentDate = new Date();
-        this.tasks = this.loadTasks();
-        this.initializeEventListeners();
-        this.diplayTasks();
-        this.updateDateDisplay();
+        this.tasks = JSON.parse(localStorage.getItem('tasks')) || {};
+        this.loadTheme();
+        this.init();
     }
 
-    loadTasks() {
-        const saved = localStorage.getItem('tasks');
-        return saved ? JSON.parse(saved) : {};
+    init() {
+        this.updateDate();
+        this.displayTasks();
+        this.updateStats();
+
+        document.getElementById('addTaskBtn').addEventListener('click', () => this.addTask());
+        document.getElementById('taskInput').addEventListener('keydown', e => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                this.addTask();
+            }
+        });
+        document.getElementById('prevDay').onclick = () => this.changeDay(-1);
+        document.getElementById('nextDay').onclick = () => this.changeDay(1);
+        document.getElementById('themeToggle').onclick = () => this.toggleTheme();
     }
-    
-    saveTasks() {
+
+    getKey() {
+        return this.currentDate.toISOString().split('T')[0];
+    }
+
+    save() {
         localStorage.setItem('tasks', JSON.stringify(this.tasks));
         this.updateStats();
     }
 
-    getDatekey(date = this.currenDate) {
-        return date.toISOString().spilt('T')[0];
-    }
+    addTask() {
+        const textInput = document.getElementById('taskInput');
+        const timeInput = document.getElementById('timeInput');
 
-    initializeEventListeners() {
-        // Pour Ajoyter Une tache 
-        document.getElementById('addTaskBtn').addEventListener('click', () => this.addTask());
-        document.getElementById('taskInput').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') this.addTask();
+        const text = textInput.value.trim();
+        if (!text) return textInput.focus();
+
+        const time = timeInput.value || new Date().toLocaleTimeString('fr-FR', {
+            hour: '2-digit',
+            minute: '2-digit'
         });
 
-        // Navigation entre les jours 
-        document.getElementById('prevDay').addEventListener('click', () => this.changeDay(-1));
-        document.getElementById('nextDay').addEventListener('click', () => this.changeDay(1));
+        document.querySelectorAll('.task-text[contenteditable="true"]').forEach(el => {
+            el.contentEditable = false;
+        });
 
-        // Metrre a jour status
-        this.updateStats();
+        const key = this.getKey();
+        if (!this.tasks[key]) this.tasks[key] = [];
+
+        this.tasks[key].push({
+            id: Date.now(),
+            text,
+            time,
+            completed: false
+        });
+
+        textInput.value = '';
+        timeInput.value = '';
+
+        this.save();
+        this.displayTasks();
     }
 
-    addTask() {
-        const input = document.getElementById('taskInput');
-        const text = input.value.trim();
+    displayTasks() {
+        const list = document.getElementById('tasksList');
+        list.innerHTML = '';
+        const key = this.getKey();
 
-        if (text) {
-            const dateKey = this.getDatekey();
+        if (!this.tasks[key] || this.tasks[key].length === 0) {
+            list.innerHTML = '<p style="text-align:center;">Aucune tâche</p>';
+            return;
+        }
 
-            if (!this.tasks[dateKey]) {
-                this.tasks[dateKey] = [];
-            }
+        this.tasks[key].forEach(task => {
+            const div = document.createElement('div');
+            div.className = `task-item ${task.completed ? 'completed' : ''}`;
 
-            const task = {
-                id: Date.now(),
-                text: text,
-                completed: false,
-                createdAt: new Date().toISOString()
+            div.innerHTML = `
+                <input type="checkbox" ${task.completed ? 'checked' : ''}>
+                <span class="task-text" contenteditable="false">${task.text}</span>
+                <span class="task-time">⏰ ${task.time}</span>
+                <div class="task-actions">
+                    <button class="edit-btn">✏</button>
+                    <button class="delete-btn">🗑</button>
+                </div>
+            `;
+
+            const textEl = div.querySelector('.task-text');
+
+            div.querySelector('input').onclick = () => {
+                task.completed = !task.completed;
+                this.save();
+                this.displayTasks();
             };
 
-            this.tasks[dateKey].push(task);
-            this.saveTasks();
-            this.diplayTasks();
-            input.value = '';
-        }
+            div.querySelector('.edit-btn').onclick = () => {
+                if (textEl.isContentEditable) {
+                    task.text = textEl.textContent.trim();
+                    textEl.contentEditable = false;
+                    this.save();
+                } else {
+                    textEl.contentEditable = true;
+                    textEl.focus();
+                }
+            };
+
+            div.querySelector('.delete-btn').onclick = () => {
+                this.tasks[key] = this.tasks[key].filter(t => t.id !== task.id);
+                if (this.tasks[key].length === 0) delete this.tasks[key];
+                this.save();
+                this.displayTasks();
+            };
+
+            list.appendChild(div);
+        });
     }
 
-    deleteTask(dateKey, taskId) {
-        if (this.tasks[dateKey]) {
-            this.tasks[dateKey] = this.tasks[dateKey].filter(task => task.id !== taskId);
-            if (this.tasks[dateKey].length === 0) {
-                delete this.tasks[dateKey];
-            }
-            this.saveTasks();
-            this.diplayTasks();
-        }
+    changeDay(n) {
+        this.currentDate.setDate(this.currentDate.getDate() + n);
+        this.updateDate();
+        this.displayTasks();
     }
 
-    toggleTask(dateKey, taskId) {
-        if (this.tasks[dateKey]) {
-            const task = this.tasks[dateKey].find(t => t.id === taskId);
-            if(task) {
-                task.completed = !task.completed;
-                this.saveTasks();
-                this.diplayTasks();
-            }
-        }
-    }
-
-    diplayTasks() {
-        const dateKey = this.getDatekey();
-        const tasksList = document.getElementById('tasksLisr');
-        tasksList.innerHTML = '';
-
-        if(this.tasks[dateKey] && this.tasks[dateKey].length > 0) {
-            this.tasks[dateKey].forEach(task => {
-                const taskElement = this.createTaskElement(task, dateKey);
-                tasksList.appendChild(taskElement);
+    updateDate() {
+        document.getElementById('currentDate').textContent =
+            this.currentDate.toLocaleDateString('fr-FR', {
+                weekday: 'long',
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
             });
-        }else{
-            tasksList.innerHTML= '<p style="text-align: center; color: #6c757d; padding: 20px;">Aucune tache pour ce jour </p>';
-        }
     }
 
-    createTaskElement(task, dateKey) {
-        const taskDiv = document.createElement('div');
-        taskDiv.className = 'task-item $(task.completed ? 'completed' : ''}';
+    updateStats() {
+        let total = 0, completed = 0;
+        Object.values(this.tasks).forEach(day =>
+            day.forEach(t => {
+                total++;
+                if (t.completed) completed++;
+            })
+        );
+        document.getElementById('totalTasks').textContent = total;
+        document.getElementById('completedTasks').textContent = completed;
+    }
 
-        const date = 
+    toggleTheme() {
+        document.body.classList.toggle('dark');
+        localStorage.setItem(
+            'theme',
+            document.body.classList.contains('dark') ? 'dark' : 'light'
+        );
+        document.getElementById('themeToggle').textContent =
+            document.body.classList.contains('dark') ? '☀️' : '🌙';
+    }
+
+    loadTheme() {
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark');
+            document.getElementById('themeToggle').textContent = '☀️';
+        }
     }
 }
+
+document.addEventListener('DOMContentLoaded', () => new TaskManager());

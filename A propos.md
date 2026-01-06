@@ -1,20 +1,45 @@
-Générateur de Couleurs Aléatoires 🎨
+# 📝 Gestionnaire de tâches – JavaScript
 
-Un petit projet web simple développé avec HTML, CSS et JavaScript.
-Il te permet de trouver rapidement de l’inspiration pour tes projets de design ou tes maquettes en générant des couleurs aléatoires à chaque clic.
+Application web moderne de gestion de tâches développée en **HTML, CSS et JavaScript pur**, avec **édition**, **heure**, **mode sombre** et **sauvegarde locale**.
 
-Fonctionnalités
+---
 
-🎯 Génération instantanée de couleurs : clique sur le bouton et découvre une nouvelle couleur aléatoire.
+## 🚀 Fonctionnalités
 
-📋 Code couleur copiable : clique sur le code pour le copier et l’utiliser directement dans tes projets.
+- ➕ Ajouter des tâches
+- ✏️ Éditer les tâches
+- 🗑 Supprimer des tâches
+- ✅ Marquer comme complétée
+- ⏰ Ajouter une heure (automatique ou personnalisée)
+- 📆 Navigation par jour
+- 🌙 Mode sombre / clair (mémorisé)
+- 💾 Sauvegarde automatique avec LocalStorage
+- 📱 Interface responsive et moderne
 
-💡 Inspiration rapide : plus besoin de chercher des couleurs partout, trouve l’inspiration en un clic !
+---
 
-Comment ça marche : 
+## 🛠️ Technologies utilisées
 
-__Clique sur le bouton “Générer une couleur”.
+- HTML5
+- CSS3 (Design moderne + Dark Mode)
+- JavaScript (ES6)
+- LocalStorage (aucun backend requis)
 
-__La couleur de fond change et le code hexadécimal apparaît.
+---
 
-__Clique sur le code pour le copier dans ton presse-papiers et l’utiliser où tu veux
+## 📂 Structure du projet
+
+gestionnaire-taches/
+│── index.html
+│── style.css
+│── script.js
+│── README.md
+
+
+---
+
+## ▶️ Utilisation
+
+1. Clone le repository :
+```bash
+git clone https://github.com/angeliherimpitia/gestionnaire-taches.git
