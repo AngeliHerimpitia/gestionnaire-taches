@@ -40,6 +40,11 @@
         <p>Terminées : <span id="completedTasks">0</span></p>
     </div>
 </div>
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("service-worker.js");
+}
+</script>
 
 <script src="script.js"></script>
 </body>
