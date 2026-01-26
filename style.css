@@ -1,10 +1,10 @@
 :root {
-  --bg-color: #f4f4f7;
+  --bg-color: #f5f6fa;
   --text-color: #222;
   --accent-color: #4caf50;
   --task-bg: #fff;
   --priority-faible: #d1e7dd;
-  --priority-moyenne: #ffe5b4;
+  --priority-moyenne: #fff3cd;
   --priority-haute: #f8d7da;
 }
 
@@ -14,14 +14,9 @@ body.dark {
   --task-bg: #242424;
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: "Poppins", sans-serif;
-}
-
 body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
   background: var(--bg-color);
   color: var(--text-color);
   min-height: 100vh;
@@ -33,13 +28,15 @@ body {
 .app {
   width: 100%;
   max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
 }
 
 header h1 {
@@ -47,30 +44,31 @@ header h1 {
 }
 
 header button {
+  font-size: 1.5rem;
   background: none;
   border: none;
-  font-size: 1.5rem;
   cursor: pointer;
 }
 
 .add-task {
   display: flex;
   gap: 10px;
-  margin-bottom: 20px;
+  flex-wrap: wrap;
 }
 
 .add-task input, .add-task select {
   padding: 10px;
   border-radius: 5px;
   border: 1px solid #ccc;
+  flex: 1;
 }
 
 .add-task button {
-  padding: 10px 15px;
-  border: none;
-  border-radius: 5px;
+  padding: 10px 20px;
   background-color: var(--accent-color);
   color: #fff;
+  border: none;
+  border-radius: 5px;
   cursor: pointer;
 }
 
@@ -82,8 +80,8 @@ header button {
 
 .task {
   background: var(--task-bg);
-  padding: 12px 15px;
-  border-radius: 6px;
+  padding: 15px;
+  border-radius: 8px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -107,8 +105,9 @@ header button {
 
 .task-priority {
   font-size: 0.8rem;
-  padding: 2px 5px;
-  border-radius: 3px;
+  padding: 3px 6px;
+  border-radius: 4px;
+  width: fit-content;
   text-transform: uppercase;
 }
 
@@ -122,13 +121,4 @@ header button {
   margin-left: 5px;
   cursor: pointer;
   font-size: 1rem;
-}
-
-@media(max-width: 480px) {
-  .add-task {
-    flex-direction: column;
-  }
-  .add-task input, .add-task select, .add-task button {
-    width: 100%;
-  }
 }
