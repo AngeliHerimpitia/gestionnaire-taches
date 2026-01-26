@@ -1,52 +1,46 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gestionnaire de tâches</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="shortcut icon" href="icon-128.png" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="header-top">
+          <h1>Gestionnaire des tâches</h1>
+        </div>
 
-    <!-- Responsive -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <div class="date-navigation">
+          <button id="prevDay"><</button>
+          <h2 id="currentDate"></h2>
+          <button id="nextDay">></button>
+        </div>
+      </header>
 
-    <!-- PWA -->
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#667eea">
+      <div class="add-task">
+        <input type="text" id="taskInput" placeholder="Ajouter une tâche..." />
+        <input type="time" id="timeInput" />
+        <button id="addTaskBtn"> Ajouter</button>
+      </div>
 
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-<div class="container">
-    <header class="header-top">
-        <h1>📝 Gestionnaire de tâches</h1>
-        <button id="themeToggle">🌙</button>
-    </header>
-
-    <div class="date-navigation">
-        <button id="prevDay">⬅</button>
-        <h2 id="currentDate"></h2>
-        <button id="nextDay">➡</button>
-    </div>
-
-    <div class="add-task">
-        <input id="taskInput" type="text" placeholder="Ajouter une tâche...">
-        <input id="timeInput" type="time">
-        <button id="addTaskBtn">➕</button>
-    </div>
-
-    <div class="tasks-container">
+      <div class="tasks-container">
         <h3>Tâches du jour</h3>
-        <button id="clearAllTasks" style="display:none;">Tout supprimer</button>
-        <div id="tasksList"></div>
-    </div>
+        <div id="tasksList" class="tasks-list"></div>
+      </div>
 
-    <div class="stats">
+      <div class="stats">
         <p>Total : <span id="totalTasks">0</span></p>
         <p>Terminées : <span id="completedTasks">0</span></p>
+      </div>
     </div>
-</div>
 
-<script src="script.js"></script>
-</body>
+    <script src="script.js"></script>
+  </body>
 </html>
+
 
 
