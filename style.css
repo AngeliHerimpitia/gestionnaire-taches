@@ -1,1 +1,53 @@
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: #f4f4f7;
+  color: #222;
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.app {
+  width: 100%;
+  max-width: 500px;
+}
+
+header h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.add-task {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.add-task input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.add-task button {
+  padding: 10px 15px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.tasks-container {
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  min-height: 100px;
+}
+
+.placeholder {
+  text-align: center;
+  color: #888;
+}
 
