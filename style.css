@@ -42,12 +42,6 @@ header {
   margin-bottom: 20px;
 }
 
-.header-actions {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
 header h1 {
   font-size: 1.8rem;
 }
@@ -59,14 +53,13 @@ header button {
   cursor: pointer;
 }
 
-.add-task, .search-task {
+.add-task {
   display: flex;
   gap: 10px;
-  margin-bottom: 15px;
-  flex-wrap: wrap;
+  margin-bottom: 20px;
 }
 
-.add-task input, .add-task select, .search-task input {
+.add-task input, .add-task select {
   padding: 10px;
   border-radius: 5px;
   border: 1px solid #ccc;
@@ -94,12 +87,6 @@ header button {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  transition: 0.2s all;
-}
-
-.task:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 .task.completed .task-text {
@@ -138,10 +125,10 @@ header button {
 }
 
 @media(max-width: 480px) {
-  .add-task, .search-task {
+  .add-task {
     flex-direction: column;
   }
-  .add-task input, .add-task select, .add-task button, .search-task input {
+  .add-task input, .add-task select, .add-task button {
     width: 100%;
   }
 }
