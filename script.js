@@ -1,126 +1,79 @@
-class TaskManager {
-    constructor() {
-        this.currentDate = new Date();
-        this.tasks = JSON.parse(localStorage.getItem("tasks")) || {};
-        this.loadTheme();
-        this.init();
-    }
+const taskInput = document.getElementById("task-input");
+const taskTime = document.getElementById("task-time");
+const addTaskBtn = document.getElementById("add-task-btn");
+const tasksContainer = document.getElementById("tasks-container");
+const themeToggle = document.getElementById("theme-toggle");
 
-    init() {
-        this.updateDate();
-        this.render();
-        document.getElementById("addTaskBtn").onclick = () => this.addTask();
-        document.getElementById("prevDay").onclick = () => this.changeDay(-1);
-        document.getElementById("nextDay").onclick = () => this.changeDay(1);
-        document.getElementById("themeToggle").onclick = () => this.toggleTheme();
-        document.getElementById("clearAllTasks").onclick = () => this.clearAll();
-    }
+let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
-    getKey() {
-        return this.currentDate.toISOString().split("T")[0];
-    }
+// Afficher les tâches
+function renderTasks() {
+  tasksContainer.innerHTML = "";
+  tasks.forEach((task, index) => {
+    const taskEl = document.createElement("div");
+    taskEl.classList.add("task");
+    if(task.completed) taskEl.classList.add("completed");
 
-    save() {
-        localStorage.setItem("tasks", JSON.stringify(this.tasks));
-        this.render();
-    }
-
-    addTask() {
-        const input = document.getElementById("taskInput");
-        if (!input.value.trim()) return;
-
-        const key = this.getKey();
-        if (!this.tasks[key]) this.tasks[key] = [];
-
-        this.tasks[key].push({
-            id: Date.now(),
-            text: input.value,
-            done: false
-        });
-
-        input.value = "";
-        this.save();
-    }
-
-    render() {
-        const list = document.getElementById("tasksList");
-        const key = this.getKey();
-        list.innerHTML = "";
-
-        if (!this.tasks[key] || this.tasks[key].length === 0) {
-            list.innerHTML = "<p style='text-align:center'>Aucune tâche</p>";
-            document.getElementById("clearAllTasks").style.display = "none";
-        } else {
-            document.getElementById("clearAllTasks").style.display = "block";
-            this.tasks[key].forEach(task => {
-                const div = document.createElement("div");
-                div.className = "task-item" + (task.done ? " completed" : "");
-                div.innerHTML = `
-                    <input type="checkbox" ${task.done ? "checked" : ""}>
-                    <span class="task-text">${task.text}</span>
-                    <button class="delete-btn">🗑</button>
-                `;
-                div.querySelector("input").onclick = () => {
-                    task.done = !task.done;
-                    this.save();
-                };
-                div.querySelector(".delete-btn").onclick = () => {
-                    this.tasks[key] = this.tasks[key].filter(t => t.id !== task.id);
-                    this.save();
-                };
-                list.appendChild(div);
-            });
-        }
-
-        this.updateStats();
-    }
-
-    updateStats() {
-        let total = 0, done = 0;
-        Object.values(this.tasks).forEach(day =>
-            day.forEach(t => {
-                total++;
-                if (t.done) done++;
-            })
-        );
-        document.getElementById("totalTasks").textContent = total;
-        document.getElementById("completedTasks").textContent = done;
-    }
-
-    changeDay(n) {
-        this.currentDate.setDate(this.currentDate.getDate() + n);
-        this.updateDate();
-        this.render();
-    }
-
-    updateDate() {
-        document.getElementById("currentDate").textContent =
-            this.currentDate.toLocaleDateString("fr-FR", {
-                weekday: "long",
-                day: "numeric",
-                month: "long"
-            });
-    }
-
-    clearAll() {
-        delete this.tasks[this.getKey()];
-        this.save();
-    }
-
-    toggleTheme() {
-        document.body.classList.toggle("dark");
-        localStorage.setItem(
-            "theme",
-            document.body.classList.contains("dark") ? "dark" : "light"
-        );
-    }
-
-    loadTheme() {
-        if (localStorage.getItem("theme") === "dark") {
-            document.body.classList.add("dark");
-        }
-    }
+    taskEl.innerHTML = `
+      <div class="task-info">
+        <span class="task-text">${task.text}</span>
+        ${task.time ? `<span class="task-time">${task.time}</span>` : ""}
+      </div>
+      <div class="task-buttons">
+        <button onclick="toggleComplete(${index})">✅</button>
+        <button onclick="editTask(${index})">✏️</button>
+        <button onclick="deleteTask(${index})">🗑️</button>
+      </div>
+    `;
+    tasksContainer.appendChild(taskEl);
+  });
 }
 
-document.addEventListener("DOMContentLoaded", () => new TaskManager());
+// Ajouter tâche
+addTaskBtn.addEventListener("click", () => {
+  const text = taskInput.value.trim();
+  const time = taskTime.value;
+  if(!text) return alert("Veuillez entrer une tâche");
 
+  tasks.push({ text, time, completed: false });
+  saveTasks();
+  taskInput.value = "";
+  taskTime.value = "";
+});
+
+// Supprimer tâche
+function deleteTask(index) {
+  tasks.splice(index, 1);
+  saveTasks();
+}
+
+// Éditer tâche
+function editTask(index) {
+  const newText = prompt("Modifier la tâche :", tasks[index].text);
+  if(newText !== null) {
+    tasks[index].text = newText.trim();
+    saveTasks();
+  }
+}
+
+// Marquer comme complétée
+function toggleComplete(index) {
+  tasks[index].completed = !tasks[index].completed;
+  saveTasks();
+}
+
+// Sauvegarder et recharger
+function saveTasks() {
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+  renderTasks();
+}
+
+// Dark / Light mode
+themeToggle.addEventListener("click", () => {
+  document.body.classList.toggle("dark");
+  localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light");
+});
+
+// Charger thème et tâches
+if(localStorage.getItem("theme") === "dark") document.body.classList.add("dark");
+renderTasks();
