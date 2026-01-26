@@ -1,46 +1,29 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gestionnaire de tâches</title>
-    <link rel="stylesheet" href="style.css" />
-    <link rel="shortcut icon" href="icon-128.png" />
-  </head>
-  <body>
-    <div class="container">
-      <header>
-        <div class="header-top">
-          <h1>Gestionnaire des tâches</h1>
-        </div>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestionnaire de Tâches</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <header>
+      <h1>Gestionnaire de Tâches</h1>
+      <button id="theme-toggle">🌙</button>
+    </header>
 
-        <div class="date-navigation">
-          <button id="prevDay"><</button>
-          <h2 id="currentDate"></h2>
-          <button id="nextDay">></button>
-        </div>
-      </header>
+    <section class="add-task">
+      <input type="text" id="task-input" placeholder="Nouvelle tâche..." />
+      <input type="time" id="task-time" />
+      <button id="add-task-btn">Ajouter</button>
+    </section>
 
-      <div class="add-task">
-        <input type="text" id="taskInput" placeholder="Ajouter une tâche..." />
-        <input type="time" id="timeInput" />
-        <button id="addTaskBtn"> Ajouter</button>
-      </div>
+    <section class="tasks-container" id="tasks-container">
+      <!-- Les tâches apparaîtront ici -->
+    </section>
+  </div>
 
-      <div class="tasks-container">
-        <h3>Tâches du jour</h3>
-        <div id="tasksList" class="tasks-list"></div>
-      </div>
-
-      <div class="stats">
-        <p>Total : <span id="totalTasks">0</span></p>
-        <p>Terminées : <span id="completedTasks">0</span></p>
-      </div>
-    </div>
-
-    <script src="script.js"></script>
-  </body>
+  <script src="script.js"></script>
+</body>
 </html>
-
-
-
