@@ -3,20 +3,38 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gestionnaire de Tâches</title>
+  <title>Gestionnaire de Tâches Pro</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="app">
     <header>
-      <h1>Gestionnaire de Tâches</h1>
-      <button id="theme-toggle">🌙</button>
+      <h1>Gestionnaire de Tâches Pro</h1>
+      <div class="header-actions">
+        <input type="date" id="filter-date" />
+        <button id="theme-toggle">🌙</button>
+      </div>
     </header>
 
     <section class="add-task">
       <input type="text" id="task-input" placeholder="Nouvelle tâche..." />
       <input type="time" id="task-time" />
+      <select id="task-priority">
+        <option value="faible">Faible</option>
+        <option value="moyenne">Moyenne</option>
+        <option value="haute">Haute</option>
+      </select>
+      <select id="task-repeat">
+        <option value="none">Une fois</option>
+        <option value="daily">Quotidienne</option>
+        <option value="weekly">Hebdomadaire</option>
+        <option value="monthly">Mensuelle</option>
+      </select>
       <button id="add-task-btn">Ajouter</button>
+    </section>
+
+    <section class="search-task">
+      <input type="text" id="search-input" placeholder="Rechercher..." />
     </section>
 
     <section class="tasks-container" id="tasks-container">
