@@ -10,10 +10,7 @@
   <div class="app">
     <header>
       <h1>Gestionnaire de Tâches Pro</h1>
-      <div class="header-actions">
-        <input type="date" id="filter-date" />
-        <button id="theme-toggle">🌙</button>
-      </div>
+      <button id="theme-toggle">🌙</button>
     </header>
 
     <section class="add-task">
@@ -24,17 +21,7 @@
         <option value="moyenne">Moyenne</option>
         <option value="haute">Haute</option>
       </select>
-      <select id="task-repeat">
-        <option value="none">Une fois</option>
-        <option value="daily">Quotidienne</option>
-        <option value="weekly">Hebdomadaire</option>
-        <option value="monthly">Mensuelle</option>
-      </select>
       <button id="add-task-btn">Ajouter</button>
-    </section>
-
-    <section class="search-task">
-      <input type="text" id="search-input" placeholder="Rechercher..." />
     </section>
 
     <section class="tasks-container" id="tasks-container">
