@@ -1,28 +1,17 @@
 const taskInput = document.getElementById("task-input");
 const taskTime = document.getElementById("task-time");
 const taskPriority = document.getElementById("task-priority");
-const taskRepeat = document.getElementById("task-repeat");
 const addTaskBtn = document.getElementById("add-task-btn");
 const tasksContainer = document.getElementById("tasks-container");
 const themeToggle = document.getElementById("theme-toggle");
-const filterDate = document.getElementById("filter-date");
-const searchInput = document.getElementById("search-input");
 
 let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
 // 🎯 Affichage des tâches
 function renderTasks() {
-  const searchText = searchInput.value.toLowerCase();
-  const filterDay = filterDate.value;
-
   tasksContainer.innerHTML = "";
 
   tasks.forEach((task, index) => {
-    // Filtrer par date
-    if(filterDay && task.date !== filterDay) return;
-    // Filtrer par recherche
-    if(searchText && !task.text.toLowerCase().includes(searchText)) return;
-
     const taskEl = document.createElement("div");
     taskEl.classList.add("task");
     if(task.completed) taskEl.classList.add("completed");
@@ -39,7 +28,6 @@ function renderTasks() {
         <button onclick="deleteTask(${index})">🗑️</button>
       </div>
     `;
-
     tasksContainer.appendChild(taskEl);
   });
 }
@@ -49,17 +37,14 @@ addTaskBtn.addEventListener("click", () => {
   const text = taskInput.value.trim();
   const time = taskTime.value;
   const priority = taskPriority.value;
-  const repeat = taskRepeat.value;
-  const date = new Date().toISOString().split('T')[0];
 
   if(!text) return alert("Veuillez entrer une tâche");
 
-  tasks.push({ text, time, priority, repeat, date, completed: false });
+  tasks.push({ text, time, priority, completed: false });
   saveTasks();
   taskInput.value = "";
   taskTime.value = "";
   taskPriority.value = "faible";
-  taskRepeat.value = "none";
 });
 
 // 🗑 Supprimer tâche
@@ -83,7 +68,7 @@ function toggleComplete(index) {
   saveTasks();
 }
 
-// 💾 Sauvegarder dans LocalStorage
+// 💾 Sauvegarder et afficher
 function saveTasks() {
   localStorage.setItem("tasks", JSON.stringify(tasks));
   renderTasks();
@@ -94,12 +79,6 @@ themeToggle.addEventListener("click", () => {
   document.body.classList.toggle("dark");
   localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light");
 });
-
-// 🔍 Recherche en direct
-searchInput.addEventListener("input", renderTasks);
-
-// 📅 Filtrer par date
-filterDate.addEventListener("change", renderTasks);
 
 // ⚡ Charger thème et tâches
 if(localStorage.getItem("theme") === "dark") document.body.classList.add("dark");
