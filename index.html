@@ -1,28 +1,33 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gestionnaire de Tâches – Étape 1</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gestionnaire de tâches</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="app">
-    <header>
-      <h1>Gestionnaire de Tâches Pro</h1>
-    </header>
+  <header>
+    <h1>📝 Gestionnaire de tâches</h1>
+    <button id="toggleTheme">🌙</button>
+  </header>
 
-    <section class="add-task">
-      <input type="text" id="task-input" placeholder="Nouvelle tâche..." />
-      <button id="add-task-btn">Ajouter</button>
+  <main>
+    <section class="controls">
+      <input type="text" id="taskInput" placeholder="Nouvelle tâche..." />
+      <input type="time" id="timeInput" />
+      <button id="addTask">Ajouter</button>
     </section>
 
-    <!-- Container des tâches -->
-    <section class="tasks-container" id="tasks-container">
-      <!-- Les tâches vont apparaître ici -->
-      <div class="placeholder">Aucune tâche pour l’instant</div>
+    <section class="day-nav">
+      <button id="prevDay">◀</button>
+      <span id="currentDay"></span>
+      <button id="nextDay">▶</button>
     </section>
-  </div>
+
+    <ul id="taskList"></ul>
+  </main>
+
+  <script src="script.js"></script>
 </body>
 </html>
-
