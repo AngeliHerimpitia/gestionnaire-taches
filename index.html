@@ -1,33 +1,51 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Gestionnaire de tâches</title>
+  <meta charset="UTF-8">
+  <title>Gestionnaire de tâches avancé | Angeli Herimpitia</title>
+
+  <!-- SEO -->
+  <meta name="description" content="Gestionnaire de tâches avec calendrier, statistiques, drag & drop et suivi du temps.">
+  <meta name="keywords" content="todo list, calendrier, productivité, javascript">
+  <meta name="author" content="Angeli Herimpitia">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+<main>
   <header>
-    <h1>📝 Gestionnaire de tâches</h1>
-    <button id="toggleTheme">🌙</button>
+    <h1> Gestionnaire de tâches</h1>
+    <p class="subtitle">Planifie, organise et analyse tes journées</p>
   </header>
 
-  <main>
-    <section class="controls">
-      <input type="text" id="taskInput" placeholder="Nouvelle tâche..." />
-      <input type="time" id="timeInput" />
-      <button id="addTask">Ajouter</button>
-    </section>
+  <!-- Navigation par date -->
+  <section class="date-nav">
+    <button id="prevDay">◀</button>
+    <input type="date" id="datePicker">
+    <button id="nextDay">▶</button>
+  </section>
 
-    <section class="day-nav">
-      <button id="prevDay">◀</button>
-      <span id="currentDay"></span>
-      <button id="nextDay">▶</button>
-    </section>
+  <!-- Ajout tâche -->
+  <section class="container">
+    <input id="taskInput" placeholder="Nouvelle tâche..." />
+    <input id="timeInput" type="number" placeholder="Durée (min)" />
+    <button id="addBtn">Ajouter</button>
 
     <ul id="taskList"></ul>
-  </main>
+  </section>
 
-  <script src="script.js"></script>
+  <!-- Stats -->
+  <section class="stats">
+    <h2> Statistiques du jour</h2>
+    <p>Total : <span id="totalTasks">0</span></p>
+    <p>Terminées : <span id="doneTasks">0</span></p>
+    <p>Temps prévu : <span id="totalTime">0</span> min</p>
+    <p>Temps effectué : <span id="doneTime">0</span> min</p>
+  </section>
+</main>
+
+<script src="script.js"></script>
 </body>
 </html>
